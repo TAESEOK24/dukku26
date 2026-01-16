@@ -1,0 +1,43 @@
+spring:
+  application:
+    name: auth
+  datasource:
+    username: ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD:password}
+
+jwt:
+  access:
+    secret:
+      key: dGhpcy1pcy1hLXN1cGVyLXNlY3VyZS1hbmQtbG9uZy10ZXN0LWtleS1mb3Itand0
+  refresh:
+    secret:
+      key: YS1kaWZmZXJlbnQtc3VwZXItc2VjdXJlLWFuZC1sb25nLXRlc3Qta2V5LWZvci1yZWZyZXNo
+
+crypto:
+  key: lGCfIAPebEerr2SH6W4Jy/63+K46CvAnWJkvFOPLIbo=
+
+custom:
+  global:
+    internalBackUrl: http://localhost:${server.port:8080}
+
+#spring:
+#  datasource:
+#    username: ${DB_USERNAME}
+#    password: ${DB_PASSWORD}
+#
+#jwt:
+#  access:
+#    secret:
+#      key: ${JWT_ACCESS_SECRET}
+#  refresh:
+#    secret:
+#      key: ${JWT_REFRESH_SECRET}
+#
+#crypto:
+#  key: ${CRYPTO_KEY}
+#
+#custom:
+#  global:
+#    internalBackUrl: http://localhost:${server.port:8080}
+
+
