@@ -1,18 +1,19 @@
 spring:
   datasource:
-    username: ${DB_USERNAME}
-    password: ${DB_PASSWORD}
+    url: jdbc:postgresql://localhost:5432/user_service
+    username: postgres
+    password: 1234
 
 jwt:
   access:
     secret:
-      key: ${JWT_ACCESS_SECRET}
+      key: dGhpcy1pcy1hLXN1cGVyLXNlY3VyZS1hbmQtbG9uZy10ZXN0LWtleS1mb3Itand0
   refresh:
     secret:
-      key: ${JWT_REFRESH_SECRET}
+      key: YS1kaWZmZXJlbnQtc3VwZXItc2VjdXJlLWFuZC1sb25nLXRlc3Qta2V5LWZvci1yZWZyZXNo
 
 crypto:
-  key: ${CRYPTO_KEY}
+  key: lGCfIAPebEerr2SH6W4Jy/63+K46CvAnWJkvFOPLIbo=
 
 custom:
   global:
