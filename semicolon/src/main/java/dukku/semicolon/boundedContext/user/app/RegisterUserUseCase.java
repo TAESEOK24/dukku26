@@ -1,31 +1,35 @@
-package dukku.user.boundedContext.user.app;
-
-import dukku.user.shared.user.dto.UserRegisterRequest;
-import dukku.user.boundedContext.user.entity.User;
-import dukku.user.boundedContext.user.entity.type.Role;
-import dukku.user.boundedContext.user.entity.type.UserStatus;
-import dukku.user.shared.user.exception.UserConflictException;
+//package dukku.semicolon.boundedContext.user.app;
+package dukku.semicolon.boundedContext.user.app;
+import dukku.semicolon.shared.user.dto.UserRegisterRequest;
+import dukku.semicolon.boundedContext.user.entity.User;
+import dukku.semicolon.boundedContext.user.entity.type.Role;
+import dukku.semicolon.boundedContext.user.entity.type.UserStatus;
+import dukku.semicolon.shared.user.exception.UserConflictException;
 import dukku.common.global.eventPublisher.EventPublisher;
-import dukku.user.shared.user.event.UserJoinedEvent;
+import dukku.semicolon.shared.user.event.UserJoinedEvent;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
 public class RegisterUserUseCase {
 
-    private final UserSupport support;
-    private final EventPublisher eventPublisher;
+    private final dukku.semicolon.boundedContext.user.app.UserSupport support;
+    private final ApplicationEventPublisher springEventPublisher; // ✅ 이름 변경(충돌 제거)
 
+    @Transactional
     public User execute(UserRegisterRequest req, Role role) {
-        User user_ = support.findByEmail(req.getEmail())
+        User userCandidate = support.findByEmail(req.getEmail())
                 .map(existing -> restoreOrFail(existing, req))
                 .orElseGet(() -> createNew(req, role));
 
-        User user = support.save(user_);
-        eventPublisher.publish(new UserJoinedEvent(User.toUserDto(user)));
+        User saved = support.save(userCandidate);
 
-        return user;
+        //스프링 이벤트 발행
+        springEventPublisher.publishEvent(new UserJoinedEvent(User.toUserDto(saved)));
+        return saved;
     }
 
     private User restoreOrFail(User user, UserRegisterRequest req) {
@@ -37,9 +41,13 @@ public class RegisterUserUseCase {
         throw new UserConflictException();
     }
 
-    private User createNew(UserRegisterRequest req, Role role) {
-        req.setPassword(support.encode(req.getPassword()));
-        return User.createUser(req, role);
-    }
+//    private User createNew(UserRegisterRequest req, Role role) {
+//        req.setPassword(support.encode(req.getPassword()));
+//        return User.createUser(req, role);
+//    }
+      private User createNew(UserRegisterRequest req, Role role) {
+        String encoded = support.encode(req.getPassword());
+        return User.createUser(req, role, encoded);
+}
 }
 

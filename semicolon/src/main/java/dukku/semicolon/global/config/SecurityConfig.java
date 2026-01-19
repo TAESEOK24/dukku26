@@ -1,4 +1,4 @@
-package dukku.user.global.config;
+package dukku.semicolon.global.config;
 
 import dukku.common.global.auth.jwt.JwtAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
@@ -45,7 +45,7 @@ public class SecurityConfig {
                                 "/api-docs/**",
                                 "/swagger-ui/**",
                                 "/swagger-ui.html",
-                                "/api/users/register"
+                                "/api/v1/users/register"
                         )
                         .permitAll() // 인증 필요없음 -> filter 미실행
                         .requestMatchers("/api/admin/**").hasRole("ADMIN")// ADMIN만 접근

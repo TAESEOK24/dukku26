@@ -1,7 +1,7 @@
-package dukku.user.shared.user.domain;
+package dukku.semicolon.shared.user.domain;
 
 import com.github.f4b6a3.uuid.UuidCreator;
-import dukku.user.boundedContext.user.entity.type.UserStatus;
+import dukku.semicolon.boundedContext.user.entity.type.UserStatus;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -22,7 +22,7 @@ import static jakarta.persistence.GenerationType.IDENTITY;
 @SuperBuilder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-public abstract class SourceUser extends BaseUser {
+public abstract class SourceUser extends dukku.semicolon.shared.user.domain.BaseUser {
 
     @Id
     @GeneratedValue(strategy = IDENTITY)

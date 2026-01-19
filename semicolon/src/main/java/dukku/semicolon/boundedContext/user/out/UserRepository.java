@@ -1,12 +1,12 @@
-package dukku.user.boundedContext.user.out;
+package dukku.semicolon.boundedContext.user.out;
 
-import dukku.user.boundedContext.user.entity.User;
+import dukku.semicolon.boundedContext.user.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
 import java.util.UUID;
 
-public interface UserRepository extends JpaRepository<User, Long> {
+public interface UserRepository extends JpaRepository<User, Integer> {
     Optional<User> findByEmail(String email);
 
     Optional<User> findByEmailAndDeletedAtIsNull(String email);
